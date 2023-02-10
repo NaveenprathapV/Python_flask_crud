@@ -1,4 +1,4 @@
-from flask import Flask, request, json ,jsonify
+from flask import Flask, request, json 
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 
@@ -9,23 +9,23 @@ def createConnection():
     db = connection.flask_db
     return db
 
-@app.route('/', methods = ['GET'])
+@app.route('/students', methods = ['GET'])
 def getStudents():
     db = createConnection()
-    studentData = db.students.find()
+    studentData = list(db.students.find({}))
     # return studentData
     # return json.dumps(studentData)
     # return jsonify(list(studentData))
     return object.__str__(studentData)
 
-@app.route('/create', methods = ['POST'])
+@app.route('/student', methods = ['POST'])
 def createStudents():
     db = createConnection()
     data = json.loads(request.data)
     studentData = db.students.insert_one(data)
     return object.__str__(studentData)
 
-@app.route('/update', methods = ['PUT'])
+@app.route('/student/:id', methods = ['PUT'])
 def updateStudents():
     db = createConnection()
     id = request.args.get('id')
@@ -34,7 +34,7 @@ def updateStudents():
     studentData = db.students.update_one({ '_id': ObjectId(id) }, { "$set": data })
     return "hi"
 
-@app.route('/delete', methods = ['DELETE'])
+@app.route('/student/:id', methods = ['DELETE'])
 def deleteStudents():
     db = createConnection()
     id = request.args.get('id')
