@@ -28,7 +28,7 @@ def updateStudents():
     data = json.loads(request.data)
     print(data)
     studentData = mongo.db.students.update_one({ '_id': ObjectId(id) }, { "$set": data })
-    return "hi"
+    
 
 @app.route('/student/:id', methods = ['DELETE'])
 def deleteStudents():
@@ -36,5 +36,4 @@ def deleteStudents():
     deleteQuery= {"_id": ObjectId(id)}
     
 if __name__ == '__main__':
-    print('enter')
-    app.run(port=7777)
+    app.run()
