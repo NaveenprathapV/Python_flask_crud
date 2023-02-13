@@ -1,12 +1,9 @@
 from flask import Flask, request, json 
 from bson.objectid import ObjectId
 from flask_pymongo import PyMongo
-from dotenv import load_dotenv 
-import os
 
 app = Flask(__name__)
-load_dotenv()
-app.config ['MONGO_URI']= os.environ.get('MONGO_URI')
+app.config.from_pyfile('config.py')
 mongo = PyMongo(app)
 
 # def createConnection():
