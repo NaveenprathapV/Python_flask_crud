@@ -20,20 +20,24 @@ def getStudents():
 def createStudents():
     data = json.loads(request.data)
     studentData = mongo.db.students.insert_one(data)
-    return object.__str__(studentData)
+    return 'Student added successfully'
 
-@app.route('/student/:id', methods = ['PUT'])
-def updateStudents():
-    id = request.args.get('id')
+@app.route('/student/<name>', methods = ['PUT'])
+def updateStudents(name):
+    print(name)
+    # id = request.args.get('id')
     data = json.loads(request.data)
-    print(data)
-    studentData = mongo.db.students.update_one({ '_id': ObjectId(id) }, { "$set": data })
+    studentData = mongo.db.students.update_one({ 'name': name }, { "$set": data })
+    return "Student updated successfully"
     
 
-@app.route('/student/:id', methods = ['DELETE'])
-def deleteStudents():
-    id = request.args.get('id')
+@app.route('/student/delete/<id>', methods = ['DELETE'])
+def deleteStudents(id):
+    # id = request.args.get('id')
     deleteQuery= {"_id": ObjectId(id)}
+    studentData = mongo.db.students.delete_one(deleteQuery)
+    return "Student deleted successfully"
+    
     
 if __name__ == '__main__':
     app.run()
