@@ -1,1 +1,3 @@
 .env
+_pycache_
+environments/my_env
